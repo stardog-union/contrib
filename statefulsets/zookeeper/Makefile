@@ -1,13 +1,17 @@
-VERSION=v3
-PROJECT_ID=google_samples
-PROJECT=gcr.io/${PROJECT_ID}
+VERSION=3.4.14
+PROJECT_ID=k8szk
+PROJECT=stardog/${PROJECT_ID}
 
 all: build
 
 build:
-	docker build --pull -t ${PROJECT}/k8szk:${VERSION} .
+	docker build --pull -t ${PROJECT}:${VERSION} .
 
 push: build
-	gcloud docker -- push ${PROJECT}/k8szk:${VERSION}
+	docker push ${PROJECT}:${VERSION}
+
+pushlatest: build
+	docker tag ${PROJECT}:${VERSION} ${PROJECT}:latest
+	docker push ${PROJECT}:latest
 
 .PHONY: all build push
